@@ -32,9 +32,7 @@ class ChimerPlugin(octoprint.plugin.SettingsPlugin,
 
 	def get_template_vars(self):
 		# Read all available GCODE chimes
-		path = self._settings.get_plugin_data_folder()
-		print("*********************************")
-		print(path)
+		path = self._basefolder
 		none_option = ["None"]
 		avail_chimes = sorted(glob.glob('{0}/gcode/*.gcode'.format(path)))
 		avail_chimes = [os.path.splitext(os.path.basename(chime))[0] for chime in avail_chimes]
