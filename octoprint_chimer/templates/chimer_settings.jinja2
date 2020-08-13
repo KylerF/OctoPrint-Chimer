@@ -1,0 +1,85 @@
+<form class="form-horizontal">
+    <div class="control-group">
+        <div class="controls">
+            <label class="control-label">{{ _('Mute') }}</label>
+			<input type="checkbox" data-bind="checked: settings.plugins.chimer.mute">	
+		</div>
+	</div>
+
+	<div class="control-group">
+        <div class="controls">
+            <label class="control-label">{{ _('After printer connected') }}</label>
+			<select class="input-block-level" data-bind="value: settings.plugins.chimer.after_printer_connected_chime"> 
+				{% for chime in plugin_chimer_chimes %}
+					<option value="{{ chime }}" {% if chime == plugin_chimer_after_printer_connected_chime  %} SELECTED {% endif %}> {{ chime }}  </option>"
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+
+	<div class="control-group">
+        <div class="controls">
+            <label class="control-label">{{ _('Before printer disconnected') }}</label>
+			<select class="input-block-level" data-bind="value: settings.plugins.chimer.before_printer_disconnected_chime"> 
+				{% for chime in plugin_chimer_chimes %}
+					<option value="{{ chime }}" {% if chime == plugin_chimer_before_printer_disconnected_chime  %} SELECTED {% endif %}> {{ chime }}  </option>"
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+
+	<div class="control-group">
+        <div class="controls">
+            <label class="control-label">{{ _('Before print starts') }}</label>
+			<select class="input-block-level" data-bind="value: settings.plugins.chimer.before_print_started_chime"> 
+				{% for chime in plugin_chimer_chimes %}
+					<option value="{{ chime }}" {% if chime == plugin_chimer_before_print_started_chime  %} SELECTED {% endif %}> {{ chime }}  </option>"
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+
+	<div class="control-group">
+        <div class="controls">
+            <label class="control-label">{{ _('After print cancelled') }}</label>
+			<select class="input-block-level" data-bind="value: settings.plugins.chimer.after_print_cancelled_chime"> 
+				{% for chime in plugin_chimer_chimes %}
+					<option value="{{ chime }}" {% if chime == plugin_chimer_after_print_cancelled_chime  %} SELECTED {% endif %}> {{ chime }}  </option>"
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+
+	<div class="control-group">
+        <div class="controls">
+            <label class="control-label">{{ _('After print completed') }}</label>
+			<select class="input-block-level" data-bind="value: settings.plugins.chimer.after_print_done_chime"> 
+				{% for chime in plugin_chimer_chimes %}
+					<option value="{{ chime }}" {% if chime == plugin_chimer_after_print_done_chime  %} SELECTED {% endif %}> {{ chime }}  </option>"
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+
+	<div class="control-group">
+        <div class="controls">
+            <label class="control-label">{{ _('After print paused') }}</label>
+			<select class="input-block-level" data-bind="value: settings.plugins.chimer.after_print_paused_chime"> 
+				{% for chime in plugin_chimer_chimes %}
+					<option value="{{ chime }}" {% if chime == plugin_chimer_after_print_paused_chime  %} SELECTED {% endif %}> {{ chime }}  </option>"
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+
+	<div class="control-group">
+        <div class="controls">
+            <label class="control-label">{{ _('Before print resumed') }}</label>
+			<select class="input-block-level" data-bind="value: settings.plugins.chimer.before_print_resumed_chime"> 
+				{% for chime in plugin_chimer_chimes %}
+					<option value="{{ chime }}" {% if chime == plugin_chimer_before_print_resumed_chime  %} SELECTED {% endif %}> {{ chime }}  </option>"
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,4 @@
+include README.md
+recursive-include octoprint_chimer/templates *
+recursive-include octoprint_chimer/translations *
+recursive-include octoprint_chimer/static *
