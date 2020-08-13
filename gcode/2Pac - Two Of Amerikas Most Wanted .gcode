@@ -1,0 +1,4 @@
+;2Pac,-,Two,Of,Amerikas,Most,Wanted,
+M300 S1244 P300
+M300 S1244 P150
+M300 S1244 P150
