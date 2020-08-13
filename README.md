@@ -1,6 +1,6 @@
 # OctoPrint-Chimer
 
-**TODO:** Describe what your plugin does.
+Plugin to play sounds via M300 commands to notify the user of printer events
 
 ## Setup
 
@@ -9,9 +9,3 @@ or manually using this URL:
 
     https://github.com/KylerF/OctoPrint-Chimer/archive/master.zip
 
-**TODO:** Describe how to install your plugin, if more needs to be done than just installing it via pip or through
-the plugin manager.
-
-## Configuration
-
-**TODO:** Describe your plugin's configuration options (if any).
