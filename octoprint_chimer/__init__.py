@@ -1,13 +1,6 @@
 # coding=utf-8
 from __future__ import absolute_import
 
-### (Don't forget to remove me)
-# This is a basic skeleton for your plugin's __init__.py. You probably want to adjust the class name of your plugin
-# as well as the plugin mixins it's subclassing from. This is really just a basic skeleton to get you started,
-# defining your plugin as a template plugin, settings and asset plugin. Feel free to add or remove mixins
-# as necessary.
-#
-# Take a look at the documentation on what other plugin mixins are available.
 import glob
 import os
 
@@ -21,7 +14,8 @@ class ChimerPlugin(octoprint.plugin.SettingsPlugin,
 
 	def on_after_startup(self):
 		mute = self._settings.get_boolean(["mute"])
-		self._logger.info("mute = {mute}".format(**locals()))
+		self._logger.info("Chimer plugin started. muted = {mute}".format(**locals()))
+
 
 	##~~ TemplatePlugin mixin
 
@@ -34,7 +28,7 @@ class ChimerPlugin(octoprint.plugin.SettingsPlugin,
 		# Read all available GCODE chimes
 		path = self._basefolder
 		none_option = ["None"]
-		avail_chimes = sorted(glob.glob('{0}/gcode/*.gcode'.format(path)))
+		avail_chimes = sorted(glob.glob("{path}/gcode/*.gcode".format(**locals())))
 		avail_chimes = [os.path.splitext(os.path.basename(chime))[0] for chime in avail_chimes]
 		all_chimes = none_option + avail_chimes
 
@@ -80,7 +74,6 @@ class ChimerPlugin(octoprint.plugin.SettingsPlugin,
 			self._logger.info("mute changed from {old_chime} to {new_chime}".format(**locals()))
 
 
-
 	##~~ AssetPlugin mixin
 
 	def get_assets(self):
@@ -95,9 +88,7 @@ class ChimerPlugin(octoprint.plugin.SettingsPlugin,
 	##~~ Softwareupdate hook
 
 	def get_update_information(self):
-		# Define the configuration for your plugin to use with the Software Update
-		# Plugin here. See https://docs.octoprint.org/en/master/bundledplugins/softwareupdate.html
-		# for details.
+		# Software Update plugin configuration
 		return dict(
 			chimer=dict(
 				displayName="Chimer",
@@ -115,13 +106,14 @@ class ChimerPlugin(octoprint.plugin.SettingsPlugin,
 		)
 
 	def gcode_script_hook(self, comm, script_type, script_name, *args, **kwargs):
+		# Ignore non-gcode script events
 		if not script_type == "gcode":
 			return None
 
 		# Return if muted
 		if self._settings.get_boolean(["mute"]):
 			return None
-	
+
 		prefix, postfix = self.retrieve_chime(script_name)
 
 		if postfix is None:
@@ -146,35 +138,30 @@ class ChimerPlugin(octoprint.plugin.SettingsPlugin,
 		elif script_name == "beforePrintResumed":
 			setting = "before_print_resumed_chime"
 		else:
+			self._logger.error("Unrecognized action encountered: {script_name}".format(**locals()))
 			return (None, None)
 
 		# Return if no chime set
 		if self._settings.get([setting]) == "None":
 			return (None, None)	
 
-		print("Playing {0}".format(self._settings.get([setting])))
-
 		# Get gcode from file
 		path = self._basefolder
-		with open('{0}/gcode/{1}.gcode'.format(path, self._settings.get([setting])), 'r') as file:
+		chime_name = self._settings.get([setting])
+		with open('{path}/gcode/{chime_name}.gcode'.format(**locals()), 'r') as file:
 			chime = file.read()
 
 		prefix = None
 		postfix = chime
 
+		self._logger.debug("Playing {chime_name} in response to {script_name} event")
+
 		return (prefix, postfix)
 
-# If you want your plugin to be registered within OctoPrint under a different name than what you defined in setup.py
-# ("OctoPrint-PluginSkeleton"), you may define that here. Same goes for the other metadata derived from setup.py that
-# can be overwritten via __plugin_xyz__ control properties. See the documentation for that.
-__plugin_name__ = "Chimer"
 
-# Starting with OctoPrint 1.4.0 OctoPrint will also support to run under Python 3 in addition to the deprecated
-# Python 2. New plugins should make sure to run under both versions for now. Uncomment one of the following
-# compatibility flags according to what Python versions your plugin supports!
-#__plugin_pythoncompat__ = ">=2.7,<3" # only python 2
-__plugin_pythoncompat__ = ">=3,<4" # only python 3
-#__plugin_pythoncompat__ = ">=2.7,<4" # python 2 and 3
+__plugin_name__ = "Chimer"
+#__plugin_pythoncompat__ = ">=3,<4" # only python 3
+__plugin_pythoncompat__ = ">=2.7,<4" # python 2 and 3
 
 def __plugin_load__():
 	global __plugin_implementation__
@@ -185,4 +172,3 @@ def __plugin_load__():
 		"octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information, 
 		"octoprint.comm.protocol.scripts": __plugin_implementation__.gcode_script_hook
 	}
-
