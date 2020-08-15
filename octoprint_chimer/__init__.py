@@ -147,6 +147,8 @@ class ChimerPlugin(octoprint.plugin.SettingsPlugin,
 
 		# Get gcode from file
 		path = self._basefolder
+		print("*******************************")
+		print(self.get_plugin_data_folder())
 		chime_name = self._settings.get([setting])
 		with open('{path}/gcode/{chime_name}.gcode'.format(**locals()), 'r') as file:
 			chime = file.read()
