@@ -16,6 +16,9 @@ class ChimerPlugin(octoprint.plugin.SettingsPlugin,
 		mute = self._settings.get_boolean(["mute"])
 		self._logger.info("Chimer plugin started. muted = {mute}".format(**locals()))
 
+		self._logger.info("*******************************")
+		self._logger.info(self.get_plugin_data_folder())
+
 
 	##~~ TemplatePlugin mixin
 
@@ -147,8 +150,6 @@ class ChimerPlugin(octoprint.plugin.SettingsPlugin,
 
 		# Get gcode from file
 		path = self._basefolder
-		self._logger.info("*******************************")
-		self._logger.info(self.get_plugin_data_folder())
 		chime_name = self._settings.get([setting])
 		with open('{path}/gcode/{chime_name}.gcode'.format(**locals()), 'r') as file:
 			chime = file.read()
