@@ -1,3 +1,0 @@
-;RingRing
-M300 S0 P75
-M300 S1244 P25
